@@ -1,0 +1,37 @@
+name: dig
+base: core20
+version: '9.16.21'
+summary: DNS lookup utility
+description: |
+  DNS lookup utility
+
+grade: devel
+confinement: devmode
+
+apps:
+  dig:
+    command: usr/bin/dig
+
+parts:
+  dig:
+    plugin: autotools
+    autotools-configure-parameters:
+      - --without-python
+    source: ftp://ftp.isc.org/isc/bind9/9.16.21/bind-9.16.21.tar.xz
+    build-packages:
+      - libcap-dev
+      - libssl-dev
+      - libuv1-dev
+      - pkg-config
+    stage-packages:
+      - libuv1
+    organize:
+      usr/local/bin/dig: usr/bin/dig
+    filesets:
+      include:
+        - usr/bin/dig
+        - usr/lib
+    stage:
+      - $include
+    prime:
+      - $include
